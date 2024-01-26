@@ -1,0 +1,244 @@
+<div class="booking-wrapper wrapper">
+  <h2>Book Your Stay</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="input-box">
+      <input type="text" placeholder="Enter your account ID" [(ngModel)]="reservationData.accountId" name="accountId"
+             required>
+    </div>
+
+    <h3>Please select a room: </h3>
+
+
+    <div class="room-selection">
+      <div class="room" [ngClass]="{'selected': selectedRoom === 'Standard'}" (click)="selectRoomType('Standard')">
+        <img src="assets/rooms/1F.png" alt="Standard Room">
+        <h3>Standard</h3>
+        <p class="price">50€</p>
+        <p class="description">A cozy room suitable for two guests. It includes a single bed, Wi-Fi, and a TV.</p>
+      </div>
+      <div class="room" [ngClass]="{'selected': selectedRoom === 'Superior'}" (click)="selectRoomType('Superior')">
+        <img src="assets/rooms/2f.png" alt="Superior Room">
+        <h3>Superior</h3>
+        <p class="price">100€</p>
+        <p class="description">The superior room is spacious and elegantly furnished. It features a double bed, Wi-Fi, flat-screen TV, minibar, and air conditioning.</p>
+      </div>
+      <div class="room" [ngClass]="{'selected': selectedRoom === 'Suite'}" (click)="selectRoomType('Suite')">
+        <img src="assets/rooms/3.jpg" alt="Suite Room">
+        <h3>Suite</h3>
+        <p class="price">200€</p>
+        <p class="description">Our suite featuring a double bed, Wi-Fi, flat-screen TV, minibar, air conditioning, bathtub, and a terrace with stunning views and a separate living area.</p>
+      </div>
+    </div>
+
+    <div class="date-picker">
+      <input type="date" [(ngModel)]="reservationData.checkInDate" name="checkInDate" required>
+      <input type="date" [(ngModel)]="reservationData.checkOutDate" name="checkOutDate" required>
+    </div>
+    <div class="input-box button">
+      <input type="submit" value="Book Now">
+    </div>
+  </form>
+</div>
+
+<div *ngIf="showSuccessModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <h3>Reservation Successful!</h3>
+    <p>Your reservation has been made successfully.</p>
+    <button (click)="goToReservations()">View Reservations</button>
+  </div>
+</div>
+
+<div *ngIf="showErrorModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <h3>Reservation Error</h3>
+    <p>There was an error processing your reservation. Please try again later.</p>
+  </div>
+</div>
+
+
+<style>
+  .booking-wrapper {
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    max-width: 800px; /* Adjusted for wider layout */
+    margin: 50px auto;
+  }
+  .modal {
+    display: block;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    border-radius: 5px;
+  }
+
+  .room h3,
+  .price {
+    text-align: center;
+    color: white;
+  }
+
+  h3{
+    font-weight: 400;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin: 25px 0 25px 0;
+  }
+
+  .wrapper h2 {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 50px;
+  }
+
+  .wrapper h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 28px;
+    border-radius: 12px;
+    background: rgba(40, 54, 24, 0.65)
+  }
+
+  .room {
+    display: inline-block; /* To have them side by side */
+    width: 30%; /* Adjust the width as necessary */
+    margin: 0 1%; /* Space them out a bit */
+    background: rgba(40, 54, 24, 1);
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Indicates it's selectable */
+    transition: transform 0.3s ease;
+  }
+
+  .room:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+
+  .room img {
+    width: 100%; /* Ensure image covers the width */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .description {
+    padding: 0 15px; /* Padding for text inside room div */
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .room.selected {
+    border: 3px solid #4CAF50; /* Adjust the color and size as needed */
+  }
+
+  .date-picker {
+    text-align: center; /* Center the date inputs */
+    margin: 20px 0; /* Space between room selection and date picker */
+  }
+
+  .date-picker input[type="date"] {
+    margin: 0 10px; /* Space out the date pickers */
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .input-box.button {
+    text-align: center; /* Center the book now button */
+  }
+
+  .wrapper form .input-box {
+    height: 52px;
+    margin: 18px 0;
+  }
+
+  .input-box.button input {
+    color: #fff;
+    letter-spacing: 1px;
+    border: none;
+    background: rgba(40, 54, 24, 1);
+    cursor: pointer;
+  }
+
+  .input-box.button input:hover {
+    background: rgba(107, 182, 21, 0.6);
+  }
+
+  form .text h3 {
+    color: #333;
+    width: 100%;
+    text-align: center;
+  }
+
+  form .text h3 a {
+    color: #4070f4;
+    text-decoration: none;
+  }
+
+  form .text h3 a:hover {
+    text-decoration: underline;
+  }
+
+  form .input-box input {
+    height: 100%;
+    width: 60%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(40, 54, 24, 1);
+    border-bottom-width: 2.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .input-box.button input {
+    padding: 10px 20px; /* Padding for the button */
+    font-size: 18px; /* Larger font size for button */
+    margin-top: 10px; /* Space above the button */
+    width: auto; /* Auto width based on content */
+  }
+
+  html {
+    background-image: url('assets/bg/bg3.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  html::after {
+    content: "";
+    background-color: rgba(40, 54, 24, 0.65);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+</style>

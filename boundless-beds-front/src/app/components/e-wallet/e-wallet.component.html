@@ -1,0 +1,223 @@
+<div class="wrapper">
+  <h2>Add Money to your E-Wallet</h2>
+  <form (ngSubmit)="fundWallet()">
+    <div class="input-box">
+      <input type="number" placeholder="Enter amount" [(ngModel)]="walletData.amount" name="amount" required>
+    </div>
+    <div class="input-box">
+      <select [(ngModel)]="walletData.currency" name="currency" required>
+        <option value="" disabled selected>Select your currency</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+        <option value="CHF">CHF</option>
+        <!-- Add other currencies as needed -->
+      </select>
+    </div>
+    <div class="input-box">
+      <input type="text" placeholder="Enter your account ID" [(ngModel)]="walletData.accountId" name="accountId"
+             required>
+    </div>
+    <div class="input-box button">
+      <input type="submit" value="Fund Wallet">
+    </div>
+  </form>
+</div>
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <h2>Wallet Funded Successfully!</h2>
+    <p>Your new balance is: {{ newBalance }}€</p>
+  </div>
+</div>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  html {
+    background-image: url('assets/bg/bg4.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  html::after {
+    content: "";
+    background-color: rgba(40, 54, 24, 0.65);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .wrapper {
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    margin: 100px auto 0 auto;
+  }
+
+  .wrapper h2 {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .wrapper h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 28px;
+    border-radius: 12px;
+    background: rgba(40, 54, 24, 0.65)
+  }
+
+  .wrapper form {
+    margin-top: 30px;
+  }
+
+  .wrapper form .input-box {
+    height: 52px;
+    margin: 18px 0;
+  }
+
+  form .input-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(40, 54, 24, 1);
+    border-bottom-width: 2.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+
+  form .policy {
+    display: flex;
+    align-items: center;
+  }
+
+  form .input-box input::placeholder {
+    color: #C7BEBE; /* Or any color that makes the placeholder less noticeable */
+    opacity: 1; /* For browsers that reduce placeholder opacity; this ensures consistency */
+  }
+
+
+  form h3 {
+    color: #707070;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+  }
+
+  .input-box.button input {
+    color: #fff;
+    letter-spacing: 1px;
+    border: none;
+    background: rgba(40, 54, 24, 1);
+    cursor: pointer;
+  }
+
+  .input-box.button input:hover {
+    background: rgba(107, 182, 21, 0.6);
+  }
+
+  form .text h3 {
+    color: #333;
+    width: 100%;
+    text-align: center;
+  }
+
+  form .text h3 a {
+    color: #4070f4;
+    text-decoration: none;
+  }
+
+  form .text h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .modal {
+    display: block;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    border-radius: 5px;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  form .input-box select {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(40, 54, 24, 1);
+    border: 2.5px solid; /* Adjust border as needed */
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    -webkit-appearance: none; /* Removes default chrome and safari style */
+    -moz-appearance: none; /* Removes default Firefox style */
+    appearance: none; /* Removes default style for select element */
+    position: relative;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="rgba(40, 54, 24, 1)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 50%;
+  }
+
+  form .input-box select:focus {
+    border-color: rgba(40, 54, 24, 0.65); /* Adjust focus border color as needed */
+  }
+</style>

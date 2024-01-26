@@ -1,0 +1,212 @@
+<div class="wrapper">
+  <h2>Create your User Hub</h2>
+  <form (ngSubmit)="createAccount()">
+    <label >Please enter your full name:</label>
+    <div class="input-box">
+      <input type="text" placeholder="Enter your full name" [(ngModel)]="account.fullName" name="fullName" required>
+    </div>
+    <label >Please enter your email:</label>
+    <div class="input-box">
+      <input type="email" placeholder="Enter your email" [(ngModel)]="account.email" name="email" required>
+    </div>
+    <label >Please enter your phone number starting with +336:</label>
+    <div class="input-box">
+      <input type="tel" placeholder="Enter your phone number" [(ngModel)]="account.phoneNumber" name="phoneNumber"
+             required>
+    </div>
+    <div class="input-box button">
+      <input type="submit" value="Register Now">
+    </div>
+    <div class="text">
+      <h3>Already have an account? <a (click)="showAccessModal = true">Access Now</a></h3>
+    </div>
+  </form>
+  <div *ngIf="showAccessModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" (click)="closeAccessModal()">&times;</span>
+      <h3>Please provide your account ID!</h3>
+      <form (submit)="redirectToAccounts(); $event.preventDefault()">
+        <div class="input-box">
+          <input type="text" placeholder="Enter your account Id" [(ngModel)]="loginAccountId" name="accountId" required>
+        </div>
+        <div class="input-box button">
+          <input type="submit" value="Access my Hub!">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showSuccessModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <h3>Account Created Successfully!</h3>
+    <p>Your Account ID: {{ createdAccountId }}</p>
+    <p>Please keep it safe as you will need it in the future.</p>
+  </div>
+</div>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  html {
+    background-image: url('assets/bg/bg2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  html::after {
+    content: "";
+    background-color: rgba(40, 54, 24, 0.65);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .wrapper {
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    margin: 100px auto 0 auto;
+  }
+
+  .wrapper h2 {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .wrapper h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 28px;
+    border-radius: 12px;
+    background: rgba(40, 54, 24, 0.65)
+  }
+
+  .wrapper form {
+    margin-top: 30px;
+  }
+
+  .wrapper form .input-box {
+    height: 52px;
+    margin: 18px 0;
+  }
+
+  form .input-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(40, 54, 24, 1);
+    border-bottom-width: 2.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+
+  form .policy {
+    display: flex;
+    align-items: center;
+  }
+
+  form .input-box input::placeholder {
+    color: #C7BEBE; /* Or any color that makes the placeholder less noticeable */
+    opacity: 1; /* For browsers that reduce placeholder opacity; this ensures consistency */
+  }
+
+
+  form h3 {
+    color: #707070;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+  }
+
+  .input-box.button input {
+    color: #fff;
+    letter-spacing: 1px;
+    border: none;
+    background: rgba(40, 54, 24, 1);
+    cursor: pointer;
+  }
+
+  .input-box.button input:hover {
+    background: rgba(107, 182, 21, 0.6);
+  }
+
+  form .text h3 {
+    color: #333;
+    width: 100%;
+    text-align: center;
+  }
+
+  form .text h3 a {
+    color: #4070f4;
+    text-decoration: none;
+  }
+
+  form .text h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .modal {
+    display: block;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    border-radius: 5px;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+</style>
